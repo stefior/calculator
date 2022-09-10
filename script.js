@@ -22,3 +22,5 @@ function operate(operator, a, b) {
   else if (operator === '*') return multiply(a, b);
   else if (operator === '/') return divide(a, b);
 }
+
+const display = document.querySelector('p');
