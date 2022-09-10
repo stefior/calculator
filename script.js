@@ -26,7 +26,19 @@ function operate(operator, a, b) {
 const display = document.querySelector('p');
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('click', () => {
-  if (button.textContent === 'clear') display.textContent = '';
-  else if (display.textContent.length === 30) return;
-  else display.textContent += button.textContent;
+  if (button.textContent === 'clear') {
+    display.textContent = '';
+  }
+  else if (button.classList.contains('backspace')) {
+    display.textContent = display.textContent.slice(0, -1);
+  }
+  else if (button.textContent === '=') {
+    return; //TODO operate()
+  }
+  else if (display.textContent.length === 30) {
+    return;
+  }
+  else {
+    display.textContent += button.textContent;
+  }
 }));
