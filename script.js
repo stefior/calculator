@@ -1,18 +1,19 @@
 "use strict";
 
-function add(a, b) {
+function add(a, b = 0) {
   return a + b;
 }
 
-function subtract(a, b) {
+function subtract(a, b = 0) {
   return a - b;
 }
 
-function multiply(a, b) {
+function multiply(a, b = 1) {
   return a * b;
 }
 
-function divide(a, b) {
+function divide(a, b = 1) {
+  if (b === 0) return 'cann0t divide by zer0';
   return a / b;
 }
 
