@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -9,28 +13,36 @@ body {
   border-color: lightgray;
   border-width: 1px;
   box-shadow: 0 0 4px lightgray;
-  width: 480px;
+  width: 380px;
   padding: 40px;;
-  height: 60%;
+  height: 55%;
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
   justify-content: center;
 }
 
-#calculator-case > div {
+.numbers,
+.operators {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: space-around;
 }
 
-p {
+.numbers {
+  flex-direction: row-reverse;
+}
+
+.display {
   background-color: black;
   color: white;
-  width: 90%;
-  padding: 20px 20px 20px;
+  width: 95%;
+  height: 58px;
+  margin: 0;
+  padding: 20px;
   text-align: right;
+  font-family: monospace;
 }
 
 button {
@@ -39,4 +51,9 @@ button {
   border-width: 1px;
   width: 5em;
   height: 5em;
+  transition-duration: .15s;
+}
+
+button:active {
+  background-color: lightblue;
 }
