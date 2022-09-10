@@ -1,0 +1,42 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#calculator-case {
+  border-style: solid;
+  border-color: lightgray;
+  border-width: 1px;
+  box-shadow: 0 0 4px lightgray;
+  width: 480px;
+  padding: 40px;;
+  height: 60%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+#calculator-case > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+p {
+  background-color: black;
+  color: white;
+  width: 90%;
+  padding: 20px 20px 20px;
+  text-align: right;
+}
+
+button {
+  border-style: solid;
+  border-color: lightgray;
+  border-width: 1px;
+  width: 5em;
+  height: 5em;
+}
