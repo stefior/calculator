@@ -38,6 +38,9 @@ buttons.forEach(button => button.addEventListener('click', () => {
   else if (display.textContent.length === 30) {
     return;
   }
+  else if (button.textContent === '.' && /\.\d*$/.test(display.textContent)) {
+    return;
+  }
   else {
     display.textContent += button.textContent;
   }
