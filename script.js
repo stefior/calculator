@@ -17,7 +17,7 @@ function divide(a, b = 1) {
   return a / b;
 }
 
-function operate(operator, a, b) {
+function operate(a, operator, b) {
   if (operator === '+') return add(a, b);
   else if (operator === '-') return subtract(a, b);
   else if (operator === '*') return multiply(a, b);
@@ -34,7 +34,11 @@ buttons.forEach(button => button.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0, -1);
   }
   else if (button.textContent === '=') {
-    return; //TODO operate()
+    let n_n = display.textContent.match(/^(\d{0,}\.?\d{0,})([\+\-\*\/])(\d{0,}\.?\d{0,})/);
+    let n1 = Number(n_n[1]);
+    let op = n_n[2];
+    let n2 = Number(n_n[3]);
+    display.textContent = operate(n1, op, n2); //TODO round it to 30 significant digits
   }
   else if (display.textContent.length === 30) {
     return;
