@@ -31,7 +31,7 @@ function operate(a, operator, b) {
   else if (/^\d+\.?\d*[\+\-\*\/]\d+/.test(b)) {
     operate(...splitDisplay(b));
   }
-  
+
   if (operator === '+') return add(a, b);
   else if (operator === '-') return subtract(a, b);
   else if (operator === '*') return multiply(a, b);
@@ -56,7 +56,11 @@ buttons.forEach(button => button.addEventListener('click', () => {
   else if (button.textContent === '.' && /\.\d*$/.test(display.textContent)) {
     return;
   }
+  else if ('+-*/'.indexOf(display.textContent[display.textContent.length - 1]) > -1 &&
+    '+-*/'.indexOf(button.textContent) > -1) {
+      return;
+  }
   else {
-    display.textContent += button.textContent; // TODO make input only take one sign between nums
+    display.textContent += button.textContent;
   } // TODO fix negative first number not working
 }));
