@@ -18,13 +18,17 @@ function divide(a, b = 1) {
 }
 
 function splitDisplay(display) {
-  const result = display.match(/^(\d+\.?\d*)([\+\-\*\/])(\d+\.?\d*)/);
+  const result = display.match(/^(\d+\.?\d*)([\+\-\*\/])(.*)/);
   result.shift();
+  if (result[2] === '') result.pop();
   return result.map(r => Number.isFinite(+r) ? +r : r);
 }
 
 function operate(a, operator, b) {
-  if (/\d+\.?\d*[\+\-\*\/]$/.test(b)) {
+  if (/^\d+\.?\d*[\+\-\*\/]$/.test(b)) {
+    b = Number(b.slice(0, -1));
+  }
+  else if (/^\d+\.?\d*[\+\-\*\/]\d+/.test(b)) {
     operate(...splitDisplay(b));
   }
   
@@ -53,6 +57,6 @@ buttons.forEach(button => button.addEventListener('click', () => {
     return;
   }
   else {
-    display.textContent += button.textContent;
-  }
+    display.textContent += button.textContent; // TODO make input only take one sign between nums
+  } // TODO fix negative first number not working
 }));
