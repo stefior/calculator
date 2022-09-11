@@ -44,7 +44,10 @@ window.addEventListener('keydown', e =>
   Array.from(buttons).find(btn =>
     btn.textContent === e.key || btn.id === e.key).click());
 buttons.forEach(button => button.addEventListener('click', () => {
-  if (button.textContent === 'clear') {
+  if (display.textContent.length === 31) {
+    return;
+  }
+  else if (button.textContent === 'clear') {
     display.textContent = '';
   }
   else if (button.id === 'Backspace') {
@@ -53,19 +56,28 @@ buttons.forEach(button => button.addEventListener('click', () => {
   else if (button.textContent === '=') {
     display.textContent = operate(...splitDisplay(display.textContent));
   }
-  else if (display.textContent.length === 31) {
-    return;
-  }
   else if (button.textContent === '.' && /\.\d*$/.test(display.textContent)) {
-    return;
+    return; // don't allow double decimals
   }
-  else if (/[\-\+]/.test(button.textContent) && !/[\+\-\*\/][\-\+]$/.test(display.textContent)) {
-    display.textContent += button.textContent;
+  else if (/^(\.|.*\D\.)$/.test(display.textContent) && /\-\+\*\//.test(button.textContent)) {
+    return; // don't allow lone decimals
   }
-  else if (/[\+\-\*\/]$/.test(display.textContent) && /[\+\-\*\/]/.test(button.textContent)) {
-    return;
+  else if (/[\-\+]/.test(button.textContent) && !/[\+\-\*\/][\-\+]$/.test(display.textContent) &&
+    /[\d\.\*\/][\-\+]$/.test(display.textContent)) {
+      display.textContent += button.textContent;
+      // only allow one + or - after a /*-+
+      // TODO simplify above
+  }
+  else if (/\D\.$/.test(display.textContent) && /[\+\-\*\/]/.test(button.textContent)) {
+    return; // TODO simplify & write explanation
+  }
+  else if (/[\*\/]/.test(button.textContent) && (/[*\/]$/.test(display.textContent))) {
+    return; // don't allow double / or *
+  }
+  else if (/[\*\/]/.test(button.textContent) && display.textContent === '') {
+    return; // don't allow the first characters to be * or /
   }
   else {
     display.textContent += button.textContent;
-  }
+  } // TODO fix double minus/plus bug for first entry
 }));
