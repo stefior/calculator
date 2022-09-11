@@ -2,23 +2,23 @@
 
 const DISPLAY_MAX_LENGTH = 31;
 
-function add(a, b = 0) {
-  b = reOperate(b);
+function add(a, b) {
+  b = reOperate(b) === undefined ? b : 0;
   return a + b;
 }
 
-function subtract(a, b = 0) {
-  b = reOperate(b);
+function subtract(a, b) {
+  b = reOperate(b) === undefined ? b : 0;
   return a - b;
 }
 
-function multiply(a, b = 1) {
-  b = reOperate(b);
+function multiply(a, b) {
+  b = reOperate(b) === undefined ? b : 1;
   return a * b;
 }
 
-function divide(a, b = 1) {
-  b = reOperate(b);
+function divide(a, b) {
+  b = reOperate(b) === undefined ? b : 0;
   if (b === 0) return 'cannot divide by zero';
   return a / b;
 }
