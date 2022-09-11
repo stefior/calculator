@@ -1,20 +1,24 @@
 "use strict";
 
 function add(a, b = 0) {
-  return a + reOperate(b);
+  b = reOperate(b);
+  return a + b;
 }
 
 function subtract(a, b = 0) {
-  return a - reOperate(b);
+  b = reOperate(b);
+  return a - b;
 }
 
 function multiply(a, b = 1) {
-  return a * reOperate(b);
+  b = reOperate(b);
+  return a * b;
 }
 
 function divide(a, b = 1) {
+  b = reOperate(b);
   if (b === 0) return 'cannot divide by zero';
-  return a / reOperate(b);
+  return a / b;
 }
 
 function displayToArray(display) {
@@ -75,4 +79,6 @@ buttons.forEach(button => button.addEventListener('click', () => {
   else {
     display.textContent += button.textContent;
   }
+  // TODO fix /-/-/- and /+/+/+ and *-*-*- and *+*+*+
+  // TODO fix divide by zero message
 }));
