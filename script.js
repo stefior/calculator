@@ -59,14 +59,12 @@ buttons.forEach(button => button.addEventListener('click', () => {
   else if (button.textContent === '.' && /\.\d*$/.test(display.textContent)) {
     return; // don't allow double decimals
   }
-  else if (/^(\.|.*\D\.)$/.test(display.textContent) && /\-\+\*\//.test(button.textContent)) {
+  else if (/\-\+\*\//.test(button.textContent) && /^(\.|.*\D\.)$/.test(display.textContent)) {
     return; // don't allow lone decimals
   }
-  else if (/[\-\+]/.test(button.textContent) && !/[\+\-\*\/][\-\+]$/.test(display.textContent) &&
-    /[\d\.\*\/][\-\+]$/.test(display.textContent)) {
-      display.textContent += button.textContent;
-      // only allow one + or - after a /*-+
-      // TODO simplify above
+  else if (/[\-\+]/.test(button.textContent) && (/[\+\-\*\/][\-\+]$/.test(display.textContent) ||
+    /^[\+\-]$/.test(display.textContent))) {
+      return; // don't allow more than one + or - after a /*-+ or at the very start
   }
   else if (/[\*\/]/.test(button.textContent) && (/[*\/]$/.test(display.textContent))) {
     return; // don't allow double / or *
