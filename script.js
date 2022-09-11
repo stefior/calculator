@@ -34,6 +34,7 @@ function operate(a, operator, ...b) {
   else if (operator === '-') return subtract(a, b);
   else if (operator === '*') return multiply(a, b);
   else if (operator === '/') return divide(a, b);
+  return a;
 }
 
 function reOperate(expression) {
@@ -48,14 +49,14 @@ window.addEventListener('keydown', e =>
   Array.from(buttons).find(btn =>
     btn.textContent === e.key || btn.id === e.key).click());
 buttons.forEach(button => button.addEventListener('click', () => {
-  if (display.textContent.length === 31) {
+  if (button.id === 'Backspace') {
+    display.textContent = display.textContent.slice(0, -1);
+  }
+  else if (display.textContent.length === 31) {
     return;
   }
   else if (button.textContent === 'clear') {
     display.textContent = '';
-  }
-  else if (button.id === 'Backspace') {
-    display.textContent = display.textContent.slice(0, -1);
   }
   else if (button.textContent === '=') {
     display.textContent = operate(...displayToArray(display.textContent));
