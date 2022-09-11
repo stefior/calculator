@@ -70,8 +70,8 @@ buttons.forEach(button => button.addEventListener('click', () => {
     /^[\+\-]$/.test(display.textContent))) {
     return; // don't allow more than one + or - after a /*-+ or at the very start
   }
-  else if (/[\*\/]/.test(button.textContent) && (/[*\/]$/.test(display.textContent))) {
-    return; // don't allow double / or *
+  else if (/[\*\/]/.test(button.textContent) && (/[\+\-*\/]$/.test(display.textContent))) {
+    return; // don't allow another / or * after -+/*
   }
   else if (/[\*\/]/.test(button.textContent) && display.textContent === '') {
     return; // don't allow the first characters to be * or /
@@ -79,6 +79,4 @@ buttons.forEach(button => button.addEventListener('click', () => {
   else {
     display.textContent += button.textContent;
   }
-  // TODO fix /-/-/- and /+/+/+ and *-*-*- and *+*+*+
-  // TODO fix divide by zero message
 }));
