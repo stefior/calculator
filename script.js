@@ -68,9 +68,6 @@ buttons.forEach(button => button.addEventListener('click', () => {
       // only allow one + or - after a /*-+
       // TODO simplify above
   }
-  else if (/\D\.$/.test(display.textContent) && /[\+\-\*\/]/.test(button.textContent)) {
-    return; // TODO simplify & write explanation
-  }
   else if (/[\*\/]/.test(button.textContent) && (/[*\/]$/.test(display.textContent))) {
     return; // don't allow double / or *
   }
