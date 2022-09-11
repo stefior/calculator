@@ -3,27 +3,34 @@
 const DISPLAY_MAX_LENGTH = 31;
 
 function add(a, b) {
-  b = reOperate(b) === undefined ? b : 0;
-  return a + b;
+  let parsedB = reOperate(b);
+  if (parsedB === undefined) parsedB = 0;
+  if (parsedB === 'cannot divide by zero') return parsedB;
+  return a + parsedB;
 }
 
 function subtract(a, b) {
-  b = reOperate(b) === undefined ? b : 0;
-  return a - b;
+  let parsedB = reOperate(b);
+  if (parsedB === undefined) parsedB = 0;
+  if (parsedB === 'cannot divide by zero') return parsedB;
+  return a - parsedB;
 }
 
 function multiply(a, b) {
-  b = reOperate(b) === undefined ? b : 1;
-  return a * b;
+  let parsedB = reOperate(b);
+  if (parsedB === undefined) parsedB = 1;
+  if (parsedB === 'cannot divide by zero') return parsedB;
+  return a * parsedB;
 }
 
 function divide(a, b) {
-  b = reOperate(b) === undefined ? b : 0;
-  if (b === 0) return 'cannot divide by zero';
-  return a / b;
+  let parsedB = reOperate(b);
+  if (parsedB === undefined) parsedB = 0;
+  if (parsedB === 0) return 'cannot divide by zero';
+  return a / parsedB;
 }
 
-function displayToArray(display) {
+function parseToArray(display) {
   let result =
     [...display.matchAll(/([\-\+]?(?:\d+\.?\d*|\d*\.\d+)(?:e\+\d+)?)([\+\-\*\/])?/g)];
   result.forEach(r => r.shift());
@@ -58,7 +65,7 @@ buttons.forEach(button => button.addEventListener('click', () => {
     display.textContent = '';
   }
   else if (button.textContent === '=') {
-    display.textContent = operate(...displayToArray(display.textContent));
+    display.textContent = operate(...parseToArray(display.textContent));
   }
   else if (display.textContent.length === DISPLAY_MAX_LENGTH) {
     return;
