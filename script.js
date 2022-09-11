@@ -13,11 +13,21 @@ function multiply(a, b = 1) {
 }
 
 function divide(a, b = 1) {
-  if (b === 0) return 'cann0t divide by zer0';
+  if (b === 0) return 'cannot divide by zero';
   return a / b;
 }
 
+function splitDisplay(display) {
+  const result = display.match(/^(\d+\.?\d*)([\+\-\*\/])(\d+\.?\d*)/);
+  result.shift();
+  return result.map(r => Number.isFinite(+r) ? +r : r);
+}
+
 function operate(a, operator, b) {
+  if (/\d+\.?\d*[\+\-\*\/]$/.test(b)) {
+    operate(...splitDisplay(b));
+  }
+  
   if (operator === '+') return add(a, b);
   else if (operator === '-') return subtract(a, b);
   else if (operator === '*') return multiply(a, b);
@@ -34,11 +44,7 @@ buttons.forEach(button => button.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0, -1);
   }
   else if (button.textContent === '=') {
-    let n_n = display.textContent.match(/^(\d{0,}\.?\d{0,})([\+\-\*\/])(\d{0,}\.?\d{0,})/);
-    let n1 = Number(n_n[1]);
-    let op = n_n[2];
-    let n2 = Number(n_n[3]);
-    display.textContent = operate(n1, op, n2); //TODO round it to 30 significant digits
+    display.textContent = operate(...splitDisplay(display.textContent)); //TODO round it to 30 significant digits
   }
   else if (display.textContent.length === 30) {
     return;
