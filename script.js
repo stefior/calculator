@@ -40,15 +40,18 @@ function operate(a, operator, b) {
 
 const display = document.querySelector('p');
 const buttons = document.querySelectorAll('button');
+window.addEventListener('keydown', e =>
+  Array.from(buttons).find(btn =>
+    btn.textContent === e.key || btn.id === e.key).click());
 buttons.forEach(button => button.addEventListener('click', () => {
   if (button.textContent === 'clear') {
     display.textContent = '';
   }
-  else if (button.classList.contains('backspace')) {
+  else if (button.id === 'Backspace') {
     display.textContent = display.textContent.slice(0, -1);
   }
   else if (button.textContent === '=') {
-    display.textContent = operate(...splitDisplay(display.textContent)); //TODO round it to 30 significant digits
+    display.textContent = operate(...splitDisplay(display.textContent));
   }
   else if (display.textContent.length === 31) {
     return;
@@ -63,6 +66,6 @@ buttons.forEach(button => button.addEventListener('click', () => {
     return;
   }
   else {
-    display.textContent += button.textContent; // TODO make scientific notation work
+    display.textContent += button.textContent;
   }
 }));
