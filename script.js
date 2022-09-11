@@ -52,11 +52,11 @@ buttons.forEach(button => button.addEventListener('click', () => {
   if (button.id === 'Backspace') {
     display.textContent = display.textContent.slice(0, -1);
   }
-  else if (display.textContent.length === 31) {
-    return;
-  }
   else if (button.textContent === 'clear') {
     display.textContent = '';
+  }
+  else if (display.textContent.length === 31) {
+    return;
   }
   else if (button.textContent === '=') {
     display.textContent = operate(...displayToArray(display.textContent));
