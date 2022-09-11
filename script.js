@@ -60,9 +60,9 @@ buttons.forEach(button => button.addEventListener('click', () => {
     display.textContent += button.textContent;
   }
   else if (/[\+\-\*\/]$/.test(display.textContent) && /[\+\-\*\/]/.test(button.textContent)) {
-      return;
+    return;
   }
   else {
     display.textContent += button.textContent; // TODO make scientific notation work
-  } // TODO allow negative between numbers too
+  }
 }));
