@@ -37,7 +37,6 @@ function operate(a, operator, ...b) {
   else if (operator === '*') return multiply(a, b);
   else if (operator === '/') return divide(a, b);
   return a;
-  if (result.length >= DISPLAY_MAX_LENGTH) return result.toExponential(24);
 }
 
 function reOperate(expression) {
