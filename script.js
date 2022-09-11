@@ -1,41 +1,41 @@
 "use strict";
 
 function add(a, b = 0) {
-  return a + b;
+  return a + reOperate(b);
 }
 
 function subtract(a, b = 0) {
-  return a - b;
+  return a - reOperate(b);
 }
 
 function multiply(a, b = 1) {
-  return a * b;
+  return a * reOperate(b);
 }
 
 function divide(a, b = 1) {
   if (b === 0) return 'cannot divide by zero';
-  return a / b;
+  return a / reOperate(b);
 }
 
-function splitDisplay(display) {
-  const result = display.match(/^(-?\d+\.?\d*(?:e\+\d+)?)([\+\-\*\/])(.*)/);
-  result.shift();
-  if (result[2] === '') result.pop();
-  return result.map(r => Number.isFinite(+r) ? +r : r);
+function displayToArray(display) {
+  let result =
+    [...display.matchAll(/([\-\+]?(?:\d+\.?\d*|\d*\.\d+)(?:e\+\d+)?)([\+\-\*\/])?/g)];
+  result.forEach(r => r.shift());
+  result = result.reduce((previousVal, currentVal) => previousVal.concat(currentVal), []);
+  return result.map(r => r && Number.isFinite(+r) ? +r : r);
 }
 
-function operate(a, operator, b) {
-  if (/^\d+\.?\d*[\+\-\*\/]$/.test(b)) {
-    b = Number(b.slice(0, -1));
-  }
-  else if (/^\d+\.?\d*[\+\-\*\/]\d*\.*\d+/.test(b)) {
-    operate(...splitDisplay(b));
-  }
-
+function operate(a, operator, ...b) {
   if (operator === '+') return add(a, b);
   else if (operator === '-') return subtract(a, b);
   else if (operator === '*') return multiply(a, b);
   else if (operator === '/') return divide(a, b);
+}
+
+function reOperate(expression) {
+  if (expression.length > 2) return operate(...expression);
+  if (expression.length > 1) return expression[0];
+  return expression[0];
 }
 
 const display = document.querySelector('p');
@@ -54,7 +54,7 @@ buttons.forEach(button => button.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0, -1);
   }
   else if (button.textContent === '=') {
-    display.textContent = operate(...splitDisplay(display.textContent));
+    display.textContent = operate(...displayToArray(display.textContent));
   }
   else if (button.textContent === '.' && /\.\d*$/.test(display.textContent)) {
     return; // don't allow double decimals
@@ -64,7 +64,7 @@ buttons.forEach(button => button.addEventListener('click', () => {
   }
   else if (/[\-\+]/.test(button.textContent) && (/[\+\-\*\/][\-\+]$/.test(display.textContent) ||
     /^[\+\-]$/.test(display.textContent))) {
-      return; // don't allow more than one + or - after a /*-+ or at the very start
+    return; // don't allow more than one + or - after a /*-+ or at the very start
   }
   else if (/[\*\/]/.test(button.textContent) && (/[*\/]$/.test(display.textContent))) {
     return; // don't allow double / or *
