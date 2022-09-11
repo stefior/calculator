@@ -1,5 +1,7 @@
 "use strict";
 
+const DISPLAY_MAX_LENGTH = 31;
+
 function add(a, b = 0) {
   b = reOperate(b);
   return a + b;
@@ -35,6 +37,7 @@ function operate(a, operator, ...b) {
   else if (operator === '*') return multiply(a, b);
   else if (operator === '/') return divide(a, b);
   return a;
+  if (result.length >= DISPLAY_MAX_LENGTH) return result.toExponential(24);
 }
 
 function reOperate(expression) {
@@ -55,11 +58,11 @@ buttons.forEach(button => button.addEventListener('click', () => {
   else if (button.textContent === 'clear') {
     display.textContent = '';
   }
-  else if (display.textContent.length === 31) {
-    return;
-  }
   else if (button.textContent === '=') {
     display.textContent = operate(...displayToArray(display.textContent));
+  }
+  else if (display.textContent.length === DISPLAY_MAX_LENGTH) {
+    return;
   }
   else if (button.textContent === '.' && /\.\d*$/.test(display.textContent)) {
     return; // don't allow double decimals
