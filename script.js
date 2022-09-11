@@ -74,5 +74,5 @@ buttons.forEach(button => button.addEventListener('click', () => {
   }
   else {
     display.textContent += button.textContent;
-  } // TODO fix double minus/plus bug for first entry
+  }
 }));
