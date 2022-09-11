@@ -28,7 +28,7 @@ function operate(a, operator, b) {
   if (/^\d+\.?\d*[\+\-\*\/]$/.test(b)) {
     b = Number(b.slice(0, -1));
   }
-  else if (/^\d+\.?\d*[\+\-\*\/]\d+/.test(b)) {
+  else if (/^\d+\.?\d*[\+\-\*\/]\d*\.*\d+/.test(b)) {
     operate(...splitDisplay(b));
   }
 
@@ -50,17 +50,19 @@ buttons.forEach(button => button.addEventListener('click', () => {
   else if (button.textContent === '=') {
     display.textContent = operate(...splitDisplay(display.textContent)); //TODO round it to 30 significant digits
   }
-  else if (display.textContent.length === 30) {
+  else if (display.textContent.length === 31) {
     return;
   }
   else if (button.textContent === '.' && /\.\d*$/.test(display.textContent)) {
     return;
   }
-  else if ('+-*/'.indexOf(display.textContent[display.textContent.length - 1]) > -1 &&
-    '+-*/'.indexOf(button.textContent) > -1) {
+  else if (/[\-\+]/.test(button.textContent) && !/[\+\-\*\/][\-\+]$/.test(display.textContent)) {
+    display.textContent += button.textContent;
+  }
+  else if (/[\+\-\*\/]$/.test(display.textContent) && /[\+\-\*\/]/.test(button.textContent)) {
       return;
   }
   else {
-    display.textContent += button.textContent;
-  }
+    display.textContent += button.textContent; // TODO make scientific notation work
+  } // TODO allow negative between numbers too
 }));
